@@ -7,7 +7,7 @@
 </div> -->
 
 <p align="center"> 
-    Organizer is a Simple Python Folder Organizer with Windows notification when organize some files with click event to open the folder that file was moved with file selected. Feel free to do any pull request or issue to incluid some file extension or make improvements.
+    Organizer is a Simple Python Folder Organizer with Windows 10 and 11 notification when organize some files with click event to open the folder that file was moved with file selected. Feel free to do any pull request or issue to incluid some file extension or make improvements.
 </p>
 
 ## Bugs Known
