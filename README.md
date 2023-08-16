@@ -12,12 +12,11 @@
     Organizer is a Simple Python Folder Organizer with Windows notification when organize some files with click event to open the folder that file was moved with file selected.
 </p>
 
-
-
 ## Bugs Known
 - When downloading something with qBitTorrent Organizer move the file infinit, yet searching for a solution.
 
-
+## Future Plans
+- Add a UI interface.
 
 ## 💻 Technologies Used <a name="Technologies_Used" ></a>
 - Python
