@@ -7,8 +7,13 @@
 </div> -->
 
 <p align="center"> 
-    Organizer is a Simple Python Folder Organizer with Windows 10 and 11 notification when organize some files with click event to open the folder that file was moved with file selected. Feel free to do any pull request or issue to incluid some file extension or make improvements.
+    Organizer is a Simple Python Folder Organizer to Windows 10 and 11, it send a notification when organize some files with two button, one open Windows Explorer with file moved selected and another to open the file. Feel free to do any pull request or issue to incluid some file extension or make improvements.
 </p>
+<div align="center">
+    <a href="" rel="">
+        <img width=400px height=200px src="./Screenshot.png">
+    </a>
+</div>
 
 ## Bugs Known
 
@@ -16,18 +21,21 @@
 -   When repeat name only can count untill 10.
 
 ## Change folder or Added Files
-Open the Organizer file `1st line` will be your path to your folder and `2nd line` file extension settings. 
+
+Open the Organizer file `1st line` will be your path to your folder and `2nd line` file extension settings.
 
 ## Instalation
-**1st** For instalation you'll need install ``Python``: 
+
+**1st** For instalation you'll need install `Python`:
 https://www.python.org/downloads/
 
-**2nd** After you will need to added ``pip`` command as global varable on Windows.
+**2nd** After you will need to added `pip` command as global varable on Windows.
 
-**3rd** Install windows_toasts libray running: 
-``` 
+**3rd** Install windows_toasts libray running:
+
+```
 pip install windows_toasts
-``` 
+```
 
 **Note**: Here Organizer will be ready to work, but if you want to automatize it when you startup your PC, then:
 
