@@ -48,7 +48,7 @@ def notification(file, folderName, newFile):
     wintoaster = InteractableWindowsToaster('Organizer')
 
     def activated_callback(activatedEventArgs: ToastActivatedEventArgs):
-        Popen(activatedEventArgs.arguments)
+        Popen(activatedEventArgs.arguments) # type: ignore
 
     newToast = Toast([f'File {file} moved to {folderName.replace("/", "")}.'])
     pathReplaced = path.replace("/", "\\");
@@ -60,9 +60,10 @@ def notification(file, folderName, newFile):
 
 def verify():
     otherFiles = []
+    newFile = None
     for file in files:
         for folderName, type in types.items():
-            if Path.splitext(file)[1] in type: # File Known
+            if Path.splitext(file)[1].lower() in type: # File Known
                 newFile = organize(folderName, file)
                 if newFile != None:
                     notification(file, folderName, newFile)
