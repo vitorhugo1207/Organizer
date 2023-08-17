@@ -13,6 +13,7 @@
 ## Bugs Known
 
 -   When downloading something with qBitTorrent Organizer move the file infinit, yet searching for a solution.
+-   When repeat name only can count untill 10.
 
 ## Change folder or Added Files
 Open the Organizer file `1st line` will be your path to your folder and `2nd line` file extension settings. 
