@@ -14,7 +14,7 @@ types = {
 
 from os import listdir, rename, mkdir, path as Path
 from time import sleep
-from windows_toasts import WindowsToaster, ToastText1
+from windows_toasts import InteractableWindowsToaster, Toast, ToastActivatedEventArgs, ToastButton
 from subprocess import Popen
 
 def organize(folderName, file):
@@ -27,9 +27,10 @@ def organize(folderName, file):
         mkdir(f"{path}{folderName}")
         rename(f"{path}{file}", f"{path}{folderName}{file}")
         return file
-        
+
     except FileExistsError: # If file is Duplicate
-        folderFiles = listdir(f"{path}{folderName}")
+        folderFiles = sorted(listdir(f"{path}{folderName}"))
+
         supposedFile = f"{Path.splitext(file)[0]} ({countDup}){Path.splitext(file)[1]}"
 
         for folderFile in folderFiles:
@@ -44,11 +45,17 @@ def organize(folderName, file):
         return
 
 def notification(file, folderName, newFile):
-    newToast = ToastText1()
-    newToast.SetBody(f'File {file} moved to {folderName.replace("/", "")}. \nClick to open folder.')
-    pathReplaced = path.replace("/", "\\")
+    wintoaster = InteractableWindowsToaster('Organizer')
+
+    def activated_callback(activatedEventArgs: ToastActivatedEventArgs):
+        Popen(activatedEventArgs.arguments)
+
+    newToast = Toast([f'File {file} moved to {folderName.replace("/", "")}.'])
+    pathReplaced = path.replace("/", "\\");
     folderNameReplaced = folderName.replace("/", "\\")
-    newToast.on_activated = lambda _: Popen(f'explorer /select,"{pathReplaced}{folderNameReplaced}{newFile}"')
+    newToast.AddAction(ToastButton('Open Location', f'explorer /select,"{pathReplaced}{folderNameReplaced}{newFile}"'))
+    newToast.AddAction(ToastButton('Open File', f'explorer /open,"{pathReplaced}{folderNameReplaced}{newFile}"'))
+    newToast.on_activated = activated_callback
     wintoaster.show_toast(newToast)
 
 def verify():
@@ -58,15 +65,16 @@ def verify():
         for folderName, type in types.items():
             if Path.splitext(file)[1] in type: # File Known
                 newFile = organize(folderName, file)
-                notification(file, folderName, newFile)
+                if newFile != None:
+                    notification(file, folderName, newFile)
         if Path.isfile(f"{path}/{file}") and Path.splitext(file)[1] != None and not Path.splitext(file)[1] == ".tmp": # Append Unknown files
             otherFiles.append(file)
     for otherFile in otherFiles: # File Unknown
-        newFile = organize("Others/", otherFile)
+        if newFile != None:
+            newFile = organize("Others/", otherFile)
         notification(otherFile, "Others/", newFile)
 
 if __name__ == '__main__':
-    wintoaster = WindowsToaster('Organizer Folder')
     while(1):
         files = listdir(path)
         verify()
