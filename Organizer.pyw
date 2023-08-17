@@ -61,7 +61,6 @@ def notification(file, folderName, newFile):
 def verify():
     otherFiles = []
     for file in files:
-        # Make a exeption is all is files is a dir
         for folderName, type in types.items():
             if Path.splitext(file)[1] in type: # File Known
                 newFile = organize(folderName, file)
