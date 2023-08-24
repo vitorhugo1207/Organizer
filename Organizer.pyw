@@ -12,6 +12,8 @@ types = {
     "Script/": [".java", ".py", ".pyw", ".js", ".c", ".cpp", ".json"]
 }
 
+exception = [None, ".fdmdownload", ".tmp", ".!qB"]
+
 from os import listdir, rename, mkdir, path as Path
 from time import sleep
 from windows_toasts import InteractableWindowsToaster, Toast, ToastActivatedEventArgs, ToastButton
@@ -67,7 +69,7 @@ def verify():
                 newFile = organize(folderName, file)
                 if newFile != None:
                     notification(file, folderName, newFile)
-        if Path.isfile(f"{path}/{file}") and Path.splitext(file)[1] != None and not Path.splitext(file)[1] == ".tmp": # Append Unknown files
+        if Path.isfile(f"{path}/{file}") and not Path.splitext(file)[1] in exception: # Append Unknown files
             otherFiles.append(file)
     for otherFile in otherFiles: # File Unknown
         if newFile != None:
