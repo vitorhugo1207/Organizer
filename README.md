@@ -17,12 +17,12 @@
 
 ## Bugs Known
 
--   When downloading something with qBitTorrent Organizer move the file infinit, yet searching for a solution.
+-   When downloading something with qBitTorrent Organizer move the file infinit, yet searching for a solution. As a solution you can set qBitTorrent to use .!qB file extention.
 -   When repeat name only can count untill 10.
 
-## Change folder or Added Files
+## Change folder, Added Files or add exeption
 
-Open the Organizer file `1st line` will be your path to your folder and `2nd line` file extension settings.
+Open the Organizer file first thing you'll see there are `path` to organize `types` to file extentions and exeption file extentions will not be moved.
 
 ## Instalation
 
