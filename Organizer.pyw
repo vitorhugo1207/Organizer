@@ -12,7 +12,7 @@ types = {
     "Script/": [".java", ".py", ".pyw", ".js", ".c", ".cpp", ".json"]
 }
 
-exception = [None, ".fdmdownload", ".tmp", ".!qB"]
+exception = [None, ".fdmdownload", ".tmp", ".!qB", ".opdownload"]
 
 from os import listdir, rename, mkdir, path as Path
 from time import sleep
