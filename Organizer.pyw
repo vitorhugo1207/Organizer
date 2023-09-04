@@ -63,7 +63,7 @@ def notification(file, folderName, newFile):
 def verify():
     otherFiles = []
     newFile = None
-    for file in files:
+    for file in listdir(path):
         for folderName, type in types.items():
             if Path.splitext(file)[1].lower() in type: # File Known
                 newFile = organize(folderName, file)
@@ -78,6 +78,5 @@ def verify():
 
 if __name__ == '__main__':
     while(1):
-        files = listdir(path)
         verify()
         sleep(2)
