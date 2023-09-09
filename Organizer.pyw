@@ -1,4 +1,4 @@
-path = "D:\Downloads"
+path = "D:/Downloads/"
 
 types = {
     "Image/": [".png", ".jpg", ".jpeg", ".webp", ".gif"],
