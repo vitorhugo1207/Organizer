@@ -1,4 +1,4 @@
-path = "C:/Users/vitor/Downloads/"
+path = "D:\Downloads"
 
 types = {
     "Image/": [".png", ".jpg", ".jpeg", ".webp", ".gif"],
