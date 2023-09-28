@@ -1,4 +1,4 @@
-path = "D:/Downloads/"
+path = "C:/Users/vitor/Downloads/"
 
 types = {
     "Image/": [".png", ".jpg", ".jpeg", ".webp", ".gif"],
@@ -15,7 +15,8 @@ types = {
 exception = [None, ".fdmdownload", ".tmp", ".!qB", ".opdownload", ".crdownload", ".part"]
 
 folderShortCurts = {
-    "Desktop": "C:/Users/vitor/Desktop/"
+    "Desktop": "C:/Users/vitor/Desktop/",
+    "My Documents": "C:/Users/vitor/My Documents/"
 }
 
 from os import listdir, rename, mkdir, path as Path
@@ -54,6 +55,7 @@ def move(toFolder, oldPath, file):
     countDup = 2
     try:
         rename(f"{oldPath}", f"{toFolder}")
+        return f"{toFolder}{file}"
 
     except FileExistsError: # If file is Duplicate
         folderFiles = sorted(listdir(f"{toFolder}"))
@@ -66,28 +68,42 @@ def move(toFolder, oldPath, file):
                 supposedFile = f"{Path.splitext(file)[0]} ({countDup}){Path.splitext(file)[1]}"
         
         rename(f"{oldPath}", f"{toFolder}{supposedFile}")
+        return f"{toFolder}{supposedFile}"
 
     except PermissionError: # When another program is using the file
         return
 
 def notification(file, folderName, newFile):
-    selections = []
+    selections = [] # Select itens for menu dropdown
     wintoaster = InteractableWindowsToaster('Organizer')
 
     def activated_callback(activatedEventArgs: ToastActivatedEventArgs):
-        inputDropDown = activatedEventArgs.inputs['newPath']
-        if(inputDropDown == 1):
-            Popen(activatedEventArgs.arguments) # type: ignore
-        else:
-            move(inputDropDown, newPath, file)
+        inputDropDown = activatedEventArgs.inputs['newPath'] # type: ignore
+
+        # Compare if moved the file or clicked to open/show in dir
+        for folderShortCurtName, folderShortCurtPath in folderShortCurts.items(): 
+            if(folderShortCurtPath == inputDropDown):
+                newLocationFile = move(inputDropDown, newPath, file).replace("/", "\\") # type: ignore
+                if(newPath in activatedEventArgs.arguments): # type: ignore
+                    if('/open' in activatedEventArgs.arguments): # type: ignore
+                        Popen(f'explorer /open,"{newLocationFile}"')
+                    elif('/select' in activatedEventArgs.arguments): # type: ignore
+                        Popen(f'explorer /select,"{newLocationFile}"')
+            if(activatedEventArgs.arguments == "confirm"): # Confirm button
+                return   
+            else: # If not change the default moved folder
+                Popen(activatedEventArgs.arguments) # type: ignore
+                return
 
     newToast = Toast([f'File {file} moved to {folderName.replace("/", "")}.'])
 
     pathReplaced = path.replace("/", "\\");
     folderNameReplaced = folderName.replace("/", "\\")
     newPath = f'{pathReplaced}{folderNameReplaced}{newFile}'
+
     newToast.AddAction(ToastButton('Open Location', f'explorer /select,"{newPath}"'))
     newToast.AddAction(ToastButton('Open File', f'explorer /open,"{newPath}"'))
+    newToast.AddAction(ToastButton('Confirm', 'confirm'))
 
     folderNameToast = folderName.replace("/", "")
     selections = [ToastSelection(f"{pathReplaced}{folderNameReplaced}", f"{folderNameToast}")]
