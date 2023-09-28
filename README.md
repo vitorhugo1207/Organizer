@@ -11,9 +11,27 @@
 </p>
 <div align="center">
     <a href="" rel="">
-        <img width=400px height=200px src="./Screenshot.png">
+        <img width=360px height=200px src="./Screenshoot.png">
     </a>
 </div>
+
+## Usage
+<div align="center">
+    <a href="" rel="">
+        <img width=720px height=200px src="./Composição-1.gif">
+    </a>
+</div>
+<div align="center">
+    <a href="" rel="">
+        <img width=360px height=200px src="./Composição-1-2.gif">
+    </a>
+</div>
+<div align="center">
+    <a href="" rel="">
+        <img width=360px height=200px src="./Composição-1-1.gif">
+    </a>
+</div>
+
 
 ## Bugs Known
 
