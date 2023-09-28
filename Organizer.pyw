@@ -87,8 +87,10 @@ def notification(file, folderName, newFile):
                 if(newPath in activatedEventArgs.arguments): # type: ignore
                     if('/open' in activatedEventArgs.arguments): # type: ignore
                         Popen(f'explorer /open,"{newLocationFile}"')
+                        return
                     elif('/select' in activatedEventArgs.arguments): # type: ignore
                         Popen(f'explorer /select,"{newLocationFile}"')
+                        return
             if(activatedEventArgs.arguments == "confirm"): # Confirm button
                 return   
             else: # If not change the default moved folder
