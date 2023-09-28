@@ -18,17 +18,17 @@
 ## Usage
 <div align="center">
     <a href="" rel="">
-        <img width=720px height=200px src="./Composição-1.gif">
+        <img width=720px height=1080px src="./Composição-1.gif">
     </a>
 </div>
 <div align="center">
     <a href="" rel="">
-        <img width=360px height=200px src="./Composição-1-2.gif">
+        <img width=720px height=1080px src="./Composição-1-2.gif">
     </a>
 </div>
 <div align="center">
     <a href="" rel="">
-        <img width=360px height=200px src="./Composição-1-1.gif">
+        <img width=720px height=1080px src="./Composição-1-1.gif">
     </a>
 </div>
 
