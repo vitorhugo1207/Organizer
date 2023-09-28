@@ -42,6 +42,10 @@
 
 Open the Organizer file first thing you'll see there are `path` to organize `types` to file extentions and exeption file extentions will not be moved.
 
+## Added a dropdown folder 
+
+Open the Organizer file, in the firsts lines you'll see a dict `folderShortCurts`, flow the exemple to added more shortcurts.
+
 ## Instalation
 
 **1st** For instalation you'll need install `Python`:
