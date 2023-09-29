@@ -36,8 +36,7 @@ def organize(folderName, file):
         return file
 
     except FileExistsError: # If file is Duplicate
-        folderFiles = sorted(listdir(f"{path}{folderName}"))
-        # print(folderFiles)
+        folderFiles = listdir(f"{path}{folderName}")
 
         supposedFile = f"{Path.splitext(file)[0]} ({countDup}){Path.splitext(file)[1]}"
 
@@ -59,12 +58,12 @@ def move(toFolder, oldPath, file):
         return f"{toFolder}{file}"
 
     except FileExistsError: # If file is Duplicate
-        folderFiles = sorted(listdir(f"{toFolder}"))
+        folderFiles = listdir(f"{toFolder}")
 
         supposedFile = f"{Path.splitext(file)[0]} ({countDup}){Path.splitext(file)[1]}"
 
         for folderFile in folderFiles:
-            if supposedFile == folderFile and Path.isfile(f"{toFolder}{folderFile}"):
+            if folderFile in folderFiles and supposedFile in folderFiles:
                 countDup += 1
                 supposedFile = f"{Path.splitext(file)[0]} ({countDup}){Path.splitext(file)[1]}"
         
