@@ -37,11 +37,12 @@ def organize(folderName, file):
 
     except FileExistsError: # If file is Duplicate
         folderFiles = sorted(listdir(f"{path}{folderName}"))
+        # print(folderFiles)
 
         supposedFile = f"{Path.splitext(file)[0]} ({countDup}){Path.splitext(file)[1]}"
 
         for folderFile in folderFiles:
-            if supposedFile == folderFile and Path.isfile(f"{path}{folderName}{folderFile}"):
+            if folderFile in folderFiles and supposedFile in folderFiles:
                 countDup += 1
                 supposedFile = f"{Path.splitext(file)[0]} ({countDup}){Path.splitext(file)[1]}"
         
@@ -93,7 +94,8 @@ def notification(file, folderName, newFile):
                         return
             if(activatedEventArgs.arguments == "confirm"): # Confirm button
                 return   
-            else: # If not change the default moved folder
+            # If not change the default moved folder
+            else: # type: ignore
                 Popen(activatedEventArgs.arguments) # type: ignore
                 return
 
