@@ -1,4 +1,4 @@
-path = "C:/Users/vitor/Downloads/"
+path = "D:/Downloads/"
 
 types = {
     "Image/": [".png", ".jpg", ".jpeg", ".webp", ".gif"],
@@ -15,8 +15,8 @@ types = {
 exception = [None, ".fdmdownload", ".tmp", ".!qB", ".opdownload", ".crdownload", ".part"]
 
 folderShortCurts = {
-    "Desktop": "C:/Users/vitor/Desktop/",
-    "My Documents": "C:/Users/vitor/My Documents/"
+    "Desktop": "D:/Desktop/",
+    "Share": "D:/Share/"
 }
 
 from os import listdir, rename, mkdir, path as Path
@@ -79,6 +79,7 @@ def notification(file, folderName, newFile):
 
     def activated_callback(activatedEventArgs: ToastActivatedEventArgs):
         inputDropDown = activatedEventArgs.inputs['newPath'] # type: ignore
+        print(activatedEventArgs)
 
         # Compare if moved the file or clicked to open/show in dir
         for folderShortCurtName, folderShortCurtPath in folderShortCurts.items(): 
@@ -94,7 +95,7 @@ def notification(file, folderName, newFile):
             if(activatedEventArgs.arguments == "confirm"): # Confirm button
                 return   
             # If not change the default moved folder
-            elif 'explorer /select' in activatedEventArgs.arguments: # type: ignore
+            elif 'explorer /select' in activatedEventArgs.arguments or 'explorer /open' in activatedEventArgs.arguments: # type: ignore
                 Popen(activatedEventArgs.arguments) # type: ignore
                 return
 
