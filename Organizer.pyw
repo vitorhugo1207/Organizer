@@ -133,7 +133,7 @@ def verify():
     for otherFile in otherFiles: # File Unknown
         if newFile != None:
             newFile = organize("Others/", otherFile)
-        notification(otherFile, "Others/", newFile)
+            notification(otherFile, "Others/", newFile)
 
 if __name__ == '__main__':
     while(1):

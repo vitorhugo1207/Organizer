@@ -36,7 +36,6 @@
 ## Bugs Known
 
 -   When downloading something with qBitTorrent Organizer move the file infinit, yet searching for a solution. As a solution you can set qBitTorrent to use .!qB file extention.
--   When repeat name only can count untill 10.
 
 ## Change folder, Added Files or add exeption
 
