@@ -1,28 +1,69 @@
-path = "D:/Downloads/"
-
-types = {
-    "Image/": [".png", ".jpg", ".jpeg", ".webp", ".gif"],
-    "Executables/": [".exe", ".AppImage", ".deb", ".appinstaller", ".msi"],
-    "Documents/": [".doc", ".docx", ".pdf", ".xlsx", ".xls"],
-    "Compacted/": [".zip", ".rar", ".7zip"],
-    "ISO/": [".iso", ".img"],
-    "Torrent/": [".torrent"],
-    "Video/": [".mkv", ".mp4"],
-    "Audio/": [".wav", ".mp3"],
-    "Script/": [".java", ".py", ".pyw", ".js", ".c", ".cpp", ".json"],
-}
-
-exception = [None, ".fdmdownload", ".tmp", ".!qB", ".opdownload", ".crdownload", ".part"]
-
-folderShortCurts = {
-    "Desktop": "D:/Desktop/",
-    "Share": "D:/Share/"
-}
-
 from os import listdir, rename, mkdir, path as Path
 from time import sleep
 from windows_toasts import InteractableWindowsToaster, Toast, ToastActivatedEventArgs, ToastButton, ToastInputSelectionBox, ToastSelection
 from subprocess import Popen
+
+path = "E:/Downloads/"
+
+types = {
+    "Image/": [
+        ".png", ".jpg", ".jpeg", ".webp", ".gif",
+        ".bmp", ".tif", ".tiff", ".ico", ".svg", ".heic", ".heif", ".avif", ".psd", ".tga",
+        ".cr2", ".nef", ".arw"
+    ],
+    "Executables/": [
+        ".exe", ".appimage", ".AppImage", ".deb", ".appinstaller", ".msi",
+        ".bat", ".cmd", ".com", ".ps1", ".msix", ".msixbundle", ".appx", ".appxbundle"
+    ],
+    "Documents/": [
+        ".doc", ".docx", ".pdf", ".xlsx", ".xls",
+        ".ppt", ".pptx", ".txt", ".rtf", ".odt", ".ods", ".odp", ".csv", ".md"
+    ],
+    "Compacted/": [
+        ".zip", ".rar", ".7z", 
+        ".gz", ".bz2", ".xz", ".tar", ".tgz", ".zipx", ".zst"
+    ],
+    "ISO/": [
+        ".iso", ".img", ".vhd", ".vhdx"
+    ],
+    "Torrent/": [
+        ".torrent"
+    ],
+    "Video/": [
+        ".mkv", ".mp4", ".avi", ".mov", ".webm", ".flv", ".wmv", ".m4v"
+    ],
+    "Audio/": [
+        ".wav", ".mp3", ".flac", ".aac", ".ogg", ".m4a", ".wma", ".opus"
+    ],
+    "Script/": [
+        ".java", ".py", ".pyw", ".js", ".c", ".cpp", ".json",
+        ".ts", ".tsx", ".html", ".css", ".scss", ".vue", ".rs", ".go", ".php", ".rb", ".sh", ".bat", ".ps1", ".yml", ".yaml", ".toml", ".ini"
+    ],
+}
+
+exception = [
+    None,
+    ".fdmdownload",
+    ".tmp",
+    ".!qB",
+    ".!qb",
+    ".!ut",
+    ".opdownload",
+    ".crdownload",
+    ".aria2",
+    ".part",
+    ".download",
+    ".partial",
+    ".downloading",
+    ".filepart",
+    ".tmpfile",
+    ".!sync",
+]
+
+folderShortCurts = {
+    "Desktop": "E:/Desktop/",
+    "Share": "E:/Share/"
+}
 
 def organize(folderName, file):
     countDup = 2
@@ -54,7 +95,7 @@ def organize(folderName, file):
 def move(toFolder, oldPath, file):
     countDup = 2
     try:
-        rename(f"{oldPath}", f"{toFolder}")
+        rename(f"{oldPath}", f"{toFolder}{file}")
         return f"{toFolder}{file}"
 
     except FileExistsError: # If file is Duplicate
@@ -78,30 +119,29 @@ def notification(file, folderName, newFile):
     wintoaster = InteractableWindowsToaster('Organizer')
 
     def activated_callback(activatedEventArgs: ToastActivatedEventArgs):
-        inputDropDown = activatedEventArgs.inputs['newPath'] # type: ignore
-        print(activatedEventArgs)
+        inputDropDown = activatedEventArgs.inputs['newPath'] 
 
         # Compare if moved the file or clicked to open/show in dir
         for folderShortCurtName, folderShortCurtPath in folderShortCurts.items(): 
             if(folderShortCurtPath == inputDropDown):
-                newLocationFile = move(inputDropDown, newPath, file).replace("/", "\\") # type: ignore
-                if(newPath in activatedEventArgs.arguments): # type: ignore
-                    if('/open' in activatedEventArgs.arguments): # type: ignore
+                newLocationFile = move(inputDropDown, newPath, file).replace("/", "\\") 
+                if(newPath in activatedEventArgs.arguments): 
+                    if('/open' in activatedEventArgs.arguments): 
                         Popen(f'explorer /open,"{newLocationFile}"')
                         return
-                    elif('/select' in activatedEventArgs.arguments): # type: ignore
+                    elif('/select' in activatedEventArgs.arguments): 
                         Popen(f'explorer /select,"{newLocationFile}"')
                         return
             if(activatedEventArgs.arguments == "confirm"): # Confirm button
                 return   
             # If not change the default moved folder
-            elif 'explorer /select' in activatedEventArgs.arguments or 'explorer /open' in activatedEventArgs.arguments: # type: ignore
-                Popen(activatedEventArgs.arguments) # type: ignore
+            elif 'explorer /select' in activatedEventArgs.arguments or 'explorer /open' in activatedEventArgs.arguments: 
+                Popen(activatedEventArgs.arguments) 
                 return
 
     newToast = Toast([f'File {file} moved to {folderName.replace("/", "")}.'])
 
-    pathReplaced = path.replace("/", "\\");
+    pathReplaced = path.replace("/", "\\")
     folderNameReplaced = folderName.replace("/", "\\")
     newPath = f'{pathReplaced}{folderNameReplaced}{newFile}'
 
@@ -131,8 +171,8 @@ def verify():
         if Path.isfile(f"{path}/{file}") and not Path.splitext(file)[1] in exception: # Append Unknown files
             otherFiles.append(file)
     for otherFile in otherFiles: # File Unknown
+        newFile = organize("Others/", otherFile)
         if newFile != None:
-            newFile = organize("Others/", otherFile)
             notification(otherFile, "Others/", newFile)
 
 if __name__ == '__main__':
